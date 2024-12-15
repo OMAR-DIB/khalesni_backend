@@ -45,7 +45,7 @@ if (!$result) {
 $data = [];
 while ($row = mysqli_fetch_assoc($result)) {
     $food_id = $row['food_id'];
-
+    
     // Initialize the food item if it doesn't exist
     if (!isset($data[$food_id])) {
         $data[$food_id] = [
