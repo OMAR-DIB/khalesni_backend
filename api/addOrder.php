@@ -5,18 +5,20 @@ include '../connection.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode(file_get_contents('php://input'), true);
 
-    if (isset($data['user_id']) && isset($data['items']) && isset($data['total_price']) && is_array($data['items'])) {
+    if (isset($data['user_id']) && isset($data['items']) && isset($data['total_price']) && is_array($data['items']) && isset($data['location']) && isset($data['phoneNumber'])) {
         $user_id = $data['user_id'];
         $items = $data['items'];
         $total_price = $data['total_price'];
+        $location = $data['location'];
+        $phoneNumber = $data['phoneNumber'];
 
         try {
             $conn->begin_transaction();
 
             // Insert order
-            $stmt = $conn->prepare("INSERT INTO `order` (user_id, status, total_price) VALUES (?, ?, ?)");
+            $stmt = $conn->prepare("INSERT INTO `order` (user_id, status, total_price, location, phoneNumber) VALUES (?, ?, ?, ?, ?)");
             $status = 'pending';
-            $stmt->bind_param("isd", $user_id, $status, $total_price);
+            $stmt->bind_param("isdss", $user_id, $status, $total_price, $location, $phoneNumber);
             $stmt->execute();
             $order_id = $conn->insert_id;
 

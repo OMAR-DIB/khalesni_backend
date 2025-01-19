@@ -11,6 +11,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         SELECT 
             `order`.id AS order_id, 
             `order`.status, 
+            `order`.phoneNumber, 
+            `order`.location, 
             `user`.username AS user_name,
             `order_items`.id AS order_items_id, 
             `order_items`.food_id, 
@@ -44,6 +46,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 'order_id' => $row['order_id'],
                 'status' => $row['status'],
                 'user_name' => $row['user_name'],
+                'location' => $row['location'],
+                'phoneNumber' => $row['phoneNumber'],
                 'items' => [
                     'food_id' => $row['food_id'],
                     'addones_id' => $row['addones_id'],
